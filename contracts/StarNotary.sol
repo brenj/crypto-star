@@ -54,7 +54,7 @@ contract StarNotary is ERC721 {
     }
 
     function checkIfStarExist(uint256 tokenId) public view returns (bool) {
-        Star star = tokenIdToStarInfo[tokenId];
+        Star memory star = tokenIdToStarInfo[tokenId];
         bytes32 hashedCoordinates = keccak256(
             abi.encodePacked(star.dec, star.mag, star.cent));
 
