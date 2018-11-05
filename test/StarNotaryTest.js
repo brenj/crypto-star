@@ -197,4 +197,30 @@ contract('StarNotary', (accounts) => {
         await this.contract.isApprovedForAll(user, operator), true);
     });
   });
+
+  describe('can utilize star contract mappings', () => {
+    const starId = 1;
+    const starPrice = web3.toWei(0.01, 'ether');
+    const user = accounts[0];
+
+    beforeEach(async function () {
+      await this.contract.createStar(
+        'awesome star!', 'dec_121.874', 'mag_245.978', 'ra_032.155',
+        'awesome star story', starId, { from: user });
+    });
+
+    it('can get price of a star for sale', async function () {
+      await this.contract.putStarUpForSale(starId, starPrice, { from: user });
+      assert.equal(await this.contract.starsForSale(starId), starPrice);
+    });
+
+    it('can get star info by tokenId', async function () {
+      assert.deepEqual(
+        await this.contract.tokenIdToStarInfo(1),
+        [
+          'awesome star!', 'dec_121.874', 'mag_245.978',
+          'ra_032.155', 'awesome star story',
+        ]);
+    });
+  });
 });
