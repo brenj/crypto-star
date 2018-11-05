@@ -91,4 +91,14 @@ contract StarNotary is ERC721 {
     {
         return ERC721.isApprovedForAll(owner, operator);
     }
+
+    function safeTransferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    )
+        public
+    {
+        ERC721.safeTransferFrom(from, to, tokenId);
+    }
 }

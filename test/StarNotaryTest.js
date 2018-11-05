@@ -155,6 +155,31 @@ contract('StarNotary', (accounts) => {
     });
   });
 
+  describe('can safely transfer token', () => {
+    const tokenId = 1;
+    const user1 = accounts[0];
+    const user2 = accounts[1];
+
+    let tx;
+
+    beforeEach(async function () {
+      await this.contract.mint(tokenId, { from: user1 });
+      tx = await this.contract.safeTransferFrom(
+        user1, user2, tokenId, { from: user1 });
+    });
+
+    it('token has new owner', async function () {
+      assert.equal(await this.contract.ownerOf(tokenId), user2);
+    });
+
+    it('emits the correct event', async function () {
+      assert.equal(tx.logs[0].event, 'Transfer');
+      assert.equal(tx.logs[0].args.tokenId, tokenId);
+      assert.equal(tx.logs[0].args.to, user2);
+      assert.equal(tx.logs[0].args.from, user1);
+    });
+  });
+
   describe('can grant approval to transfer', () => {
     const tokenId = 1;
     const user1 = accounts[0];
