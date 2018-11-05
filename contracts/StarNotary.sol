@@ -16,35 +16,43 @@ contract StarNotary is ERC721 {
     mapping(uint256 => Star) public tokenIdToStarInfo;
     mapping(uint256 => uint256) public starsForSale;
 
-    function createStar(string _name, string _dec, string _mag, string _cent, string _story, uint256 _tokenId) public {
-
+    function createStar(
+        string name,
+        string dec,
+        string mag,
+        string cent,
+        string story,
+        uint256 tokenId
+    )
+        public
+    {
         bytes32 hashedCoordinates = keccak256(
-            abi.encodePacked(_dec, _mag, _cent));
+            abi.encodePacked(dec, mag, cent));
         require(coordinatesToTokenId[hashedCoordinates] == 0x0);
 
-        Star memory newStar = Star(_name, _dec, _mag, _cent, _story);
+        Star memory newStar = Star(name, dec, mag, cent, story);
 
-        tokenIdToStarInfo[_tokenId] = newStar;
-        coordinatesToTokenId[hashedCoordinates] = _tokenId;
+        tokenIdToStarInfo[tokenId] = newStar;
+        coordinatesToTokenId[hashedCoordinates] = tokenId;
 
-        mint(_tokenId);
+        mint(tokenId);
     }
 
-    function putStarUpForSale(uint256 _tokenId, uint256 _price) public {
-        require(this.ownerOf(_tokenId) == msg.sender);
+    function putStarUpForSale(uint256 tokenId, uint256 price) public {
+        require(this.ownerOf(tokenId) == msg.sender);
 
-        starsForSale[_tokenId] = _price;
+        starsForSale[tokenId] = price;
     }
 
-    function buyStar(uint256 _tokenId) public payable { 
-        require(starsForSale[_tokenId] > 0);
+    function buyStar(uint256 tokenId) public payable {
+        require(starsForSale[tokenId] > 0);
         
-        uint256 starCost = starsForSale[_tokenId];
-        address starOwner = this.ownerOf(_tokenId);
+        uint256 starCost = starsForSale[tokenId];
+        address starOwner = this.ownerOf(tokenId);
         require(msg.value >= starCost);
 
-        _removeTokenFrom(starOwner, _tokenId);
-        _addTokenTo(msg.sender, _tokenId);
+        _removeTokenFrom(starOwner, tokenId);
+        _addTokenTo(msg.sender, tokenId);
         
         starOwner.transfer(starCost);
 

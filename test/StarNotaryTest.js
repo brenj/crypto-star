@@ -69,40 +69,40 @@ contract('StarNotary', (accounts) => {
     const user1 = accounts[1];
     const user2 = accounts[2];
 
-    const starId = 1;
+    const tokenId = 1;
     const starPrice = web3.toWei(0.01, 'ether');
 
     beforeEach(async function () {
       await this.contract.createStar(
         'awesome star #1!', 'dec_121.874', 'mag_245.978', 'ra_032.155',
-        'awesome star story #1', starId, { from: user1 });
+        'awesome star story #1', tokenId, { from: user1 });
     });
 
     it('can put up star for sale', async function () {
-      assert.equal(await this.contract.ownerOf(starId), user1);
+      assert.equal(await this.contract.ownerOf(tokenId), user1);
       await this.contract.putStarUpForSale(
-        starId, starPrice, { from: user1 });
+        tokenId, starPrice, { from: user1 });
 
-      assert.equal(await this.contract.starsForSale(starId), starPrice);
+      assert.equal(await this.contract.starsForSale(tokenId), starPrice);
     });
 
     describe('can buy a star that was put up for sale', () => {
       beforeEach(async function () {
         await this.contract.putStarUpForSale(
-          starId, starPrice, { from: user1 });
+          tokenId, starPrice, { from: user1 });
       });
 
       it('user2 is the owner of star after they buy it', async function () {
         await this.contract.buyStar(
-          starId, { from: user2, value: starPrice, gasPrice: 0 });
-        assert.equal(await this.contract.ownerOf(starId), user2);
+          tokenId, { from: user2, value: starPrice, gasPrice: 0 });
+        assert.equal(await this.contract.ownerOf(tokenId), user2);
       });
 
       it('user2 ether balance changed correctly', async function () {
         const overpaidAmount = web3.toWei(0.05, 'ether');
         const balanceBeforeTransaction = web3.eth.getBalance(user2);
         await this.contract.buyStar(
-          starId, { from: user2, value: overpaidAmount, gasPrice: 0 });
+          tokenId, { from: user2, value: overpaidAmount, gasPrice: 0 });
         const balanceAfterTransaction = web3.eth.getBalance(user2);
 
         assert.equal(
@@ -112,17 +112,17 @@ contract('StarNotary', (accounts) => {
   });
 
   describe('can check existence of a star', () => {
-    const starId = 1;
+    const tokenId = 1;
     const nonexistentStarId = 2;
 
     beforeEach(async function () {
       await this.contract.createStar(
         'awesome star #1!', 'dec_121.874', 'mag_245.978', 'ra_032.155',
-        'awesome star story #1', starId, { from: accounts[0] });
+        'awesome star story #1', tokenId, { from: accounts[0] });
     });
 
     it('can check if star exists', async function () {
-      assert.equal(await this.contract.checkIfStarExist(starId), true);
+      assert.equal(await this.contract.checkIfStarExist(tokenId), true);
     });
 
     it('can check if star doesn\'t exist', async function () {
@@ -224,19 +224,20 @@ contract('StarNotary', (accounts) => {
   });
 
   describe('can utilize star contract mappings', () => {
-    const starId = 1;
+    const tokenId = 1;
     const starPrice = web3.toWei(0.01, 'ether');
     const user = accounts[0];
 
     beforeEach(async function () {
       await this.contract.createStar(
         'awesome star!', 'dec_121.874', 'mag_245.978', 'ra_032.155',
-        'awesome star story', starId, { from: user });
+        'awesome star story', tokenId, { from: user });
     });
 
     it('can get price of a star for sale', async function () {
-      await this.contract.putStarUpForSale(starId, starPrice, { from: user });
-      assert.equal(await this.contract.starsForSale(starId), starPrice);
+      await this.contract.putStarUpForSale(
+        tokenId, starPrice, { from: user });
+      assert.equal(await this.contract.starsForSale(tokenId), starPrice);
     });
 
     it('can get star info by tokenId', async function () {
