@@ -1,5 +1,6 @@
 /* eslint no-undef:0 */
 /* eslint func-names:0 */
+/* eslint prefer-arrow-callback:0 */
 
 const StarNotary = artifacts.require('StarNotary');
 const REVERT_ERROR_MSG = 'VM Exception while processing transaction: revert';
@@ -151,6 +152,33 @@ contract('StarNotary', (accounts) => {
 
     it('emits correct event during minting of new token', async function () {
       assert.equal(tx.logs[0].event, 'Transfer');
+    });
+  });
+
+  describe('can grant approval to transfer', () => {
+    const tokenId = 1;
+    const user1 = accounts[0];
+    const user2 = accounts[1];
+
+    let tx;
+
+    beforeEach(async function () {
+      await this.contract.mint(tokenId, { from: user1 });
+      tx = await this.contract.approve(user2, tokenId, { from: user1 });
+    });
+
+    it('user can be set as an approved address', async function () {
+      assert.equal(await this.contract.getApproved(tokenId), user2);
+    });
+
+    it('approved user can receive transfer', async function () {
+      await this.contract.transferFrom(
+        user1, user2, tokenId, { from: user2 });
+      assert.equal(await this.contract.ownerOf(tokenId), user2);
+    });
+
+    it('emits the correct event during approval', async function () {
+      assert.equal(tx.logs[0].event, 'Approval');
     });
   });
 });
