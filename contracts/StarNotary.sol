@@ -27,7 +27,7 @@ contract StarNotary is ERC721 {
         tokenIdToStarInfo[_tokenId] = newStar;
         coordinatesToTokenId[hashedCoordinates] = _tokenId;
 
-        _mint(msg.sender, _tokenId);
+        mint(_tokenId);
     }
 
     function putStarUpForSale(uint256 _tokenId, uint256 _price) public {
@@ -59,5 +59,13 @@ contract StarNotary is ERC721 {
             abi.encodePacked(star.dec, star.mag, star.cent));
 
         return coordinatesToTokenId[hashedCoordinates] != 0x0;
+    }
+
+    function mint(uint256 tokenId) public {
+        _mint(msg.sender, tokenId);
+    }
+
+    function ownerOf(uint256 tokenId) public view returns (address) {
+        return ERC721.ownerOf(tokenId);
     }
 }

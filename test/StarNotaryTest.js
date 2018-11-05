@@ -130,4 +130,27 @@ contract('StarNotary', (accounts) => {
     });
   });
 
+  describe('can mint a token', () => {
+    const tokenId = 1;
+    const user = accounts[0];
+
+    let tx;
+
+    beforeEach(async function () {
+      tx = await this.contract.mint(tokenId, { from: user });
+    });
+
+    it('owner of tokenId is user', async function () {
+      assert.equal(await this.contract.ownerOf(tokenId), user);
+    });
+
+    it('balance of user is incremented by 1', async function () {
+      const balance = await this.contract.balanceOf(user);
+      assert.equal(balance.toNumber(), 1);
+    });
+
+    it('emits correct event during minting of new token', async function () {
+      assert.equal(tx.logs[0].event, 'Transfer');
+    });
+  });
 });
