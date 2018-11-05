@@ -64,7 +64,7 @@ contract('StarNotary', (accounts) => {
     });
   });
 
-  describe('buying and selling stars', () => {
+  describe('can buy and sell stars', () => {
     const user1 = accounts[1];
     const user2 = accounts[2];
 
@@ -77,7 +77,7 @@ contract('StarNotary', (accounts) => {
         'awesome star story #1', starId, { from: user1 });
     });
 
-    it('user1 can put up their star for sale', async function () {
+    it('can put up star for sale', async function () {
       assert.equal(await this.contract.ownerOf(starId), user1);
       await this.contract.putStarUpForSale(
         starId, starPrice, { from: user1 });
@@ -85,7 +85,7 @@ contract('StarNotary', (accounts) => {
       assert.equal(await this.contract.starsForSale(starId), starPrice);
     });
 
-    describe('user2 can buy a star that was put up for sale', () => {
+    describe('can buy a star that was put up for sale', () => {
       beforeEach(async function () {
         await this.contract.putStarUpForSale(
           starId, starPrice, { from: user1 });
@@ -109,4 +109,25 @@ contract('StarNotary', (accounts) => {
       });
     });
   });
+
+  describe('can check existence of a star', () => {
+    const starId = 1;
+    const nonexistentStarId = 2;
+
+    beforeEach(async function () {
+      await this.contract.createStar(
+        'awesome star #1!', 'dec_121.874', 'mag_245.978', 'ra_032.155',
+        'awesome star story #1', starId, { from: accounts[0] });
+    });
+
+    it('can check if star exists', async function () {
+      assert.equal(await this.contract.checkIfStarExist(starId), true);
+    });
+
+    it('can check if star doesn\'t exist', async function () {
+      assert.equal(
+        await this.contract.checkIfStarExist(nonexistentStarId), false);
+    });
+  });
+
 });
