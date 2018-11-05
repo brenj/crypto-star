@@ -181,4 +181,20 @@ contract('StarNotary', (accounts) => {
       assert.equal(tx.logs[0].event, 'Approval');
     });
   });
+
+  describe('can set an operator', () => {
+    const operator = accounts[0];
+    const tokenId = 1;
+    const user = accounts[1];
+
+    beforeEach(async function () {
+      await this.contract.mint(tokenId, { from: user });
+      await this.contract.setApprovalForAll(operator, true, { from: user });
+    });
+
+    it('can set an operator and check approval status', async function () {
+      assert.equal(
+        await this.contract.isApprovedForAll(user, operator), true);
+    });
+  });
 });

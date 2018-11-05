@@ -76,4 +76,19 @@ contract StarNotary is ERC721 {
     function getApproved(uint256 tokenId) public view returns (address) {
         return ERC721.getApproved(tokenId);
     }
+
+    function setApprovalForAll(address to, bool approved) public {
+        ERC721.setApprovalForAll(to, approved);
+    }
+
+    function isApprovedForAll(
+        address owner,
+        address operator
+    )
+        public
+        view
+        returns (bool)
+    {
+        return ERC721.isApprovedForAll(owner, operator);
+    }
 }
