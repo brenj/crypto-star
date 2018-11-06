@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>Star Notary</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <!-- Libraries
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div class="one-half column" style="margin-top: 10%">
+        <h2>Claim</h2>
+        <h5>Claim a new star</h5>
+        <div class="row">
+          <div class="six columns">
+            <label for="nameInput">Name</label>
+            <input class="u-full-width" type="text" id="nameInput" placeholder="My star">
+          </div>
+          <div class="six columns">
+            <label for="raInput">Right Ascension</label>
+            <input class="u-full-width" type="text" id="raInput" placeholder="ra_032.155">
+          </div>
+        </div>
+        <div class="row">
+          <div class="six columns">
+            <label for="decInput">Declination</label>
+            <input class="u-full-width" type="text" id="decInput" placeholder="dec_121.874">
+          </div>
+          <div class="six columns">
+            <label for="magInput">Magnitude</label>
+            <input class="u-full-width" type="text" id="magInput" placeholder="mag_245.978">
+          </div>
+        </div>
+        <div class="row">
+          <div class="twelve columns">
+            <label for="tokenIdInput">Token ID</label>
+            <input class="u-full-width" type="text" id="tokenIdInput">
+          </div>
+        </div>
+        <div class="row">
+          <div class="twelve columns">
+            <label for="storyTextArea">Story</label>
+            <textarea class="u-full-width" placeholder="My star story is …" id="storyTextArea"></textarea>
+          </div>
+        </div>
+        <input class="button-primary" type="button" onclick="claimButtonClicked()" value="Claim">
+      </div>
+      <div class="one-half column" style="margin-top: 10%; padding-left: 15%;">
+        <h2>Search</h2>
+        <h5>Lookup a star by ID</h5>
+        <div class="row">
+          <div class="twelve columns">
+            <label for="searchInput">Token ID</label>
+            <input class="u-full-width" type="text" id="searchInput">
+          </div>
+        </div>
+        <input class="button-primary" type="button" onclick="searchButtonClicked()" value="Search">
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function claimButtonClicked() {
+      var name = document.getElementById("nameInput").value.trim();
+      var ra = document.getElementById("raInput").value.trim();
+      var dec = document.getElementById("decInput").value.trim();
+      var mag = document.getElementById("magInput").value.trim();
+      var tokenId = document.getElementById("tokenIdInput").value.trim();
+      var story = document.getElementById("storyTextArea").value.trim();
+
+      if (name === "" || ra === "" || dec === "" || mag === "" || tokenId  === "" || story  === "") {
+        toastr.error(null, 'You must provide all star fields to claim a star', {positionClass: 'toast-top-full-width'})
+        return;
+      }
+    };
+
+    function searchButtonClicked() {
+      var tokenId = document.getElementById("searchInput").value.trim();
+      if (tokenId === "") {
+        toastr.error(null, 'You must provide a Token ID to look up a star by ID', {positionClass: 'toast-top-full-width'})
+        return;
+      }
+    };
+  </script>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
