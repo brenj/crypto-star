@@ -12,17 +12,56 @@ Supporting courses:
 
 Requirements
 ------------
+* Node
+* Node Package Manager (npm)
 
 Install & Run
 -------------
-
-Code Quality
-------------
+1. `npm install`
+2. `truffle test`
+3. `npm run web`
 
 Code Organization
 -----------------
 ```console
+├── README.md
+├── build
+│   └── contracts
+│       ├── Address.json
+│       ├── ERC165.json
+│       ├── ERC721.json
+│       ├── IERC165.json
+│       ├── IERC721.json
+│       ├── IERC721Receiver.json
+│       ├── Migrations.json
+│       ├── SafeMath.json
+│       └── StarNotary.json
+├── contracts
+│   ├── Migrations.sol
+│   └── StarNotary.sol
+├── migrations
+│   ├── 1_initial_migration.js
+│   └── 2_star_notary_migration.js
+├── package-lock.json
+├── package.json
+├── test
+│   └── StarNotaryTest.js
+├── truffle-config.js
+├── truffle.js
+└── web
+    ├── css
+    │   ├── normalize.css
+    │   └── skeleton.css
+    ├── images
+    │   └── favicon.png
+    └── index.html
+
+8 directories, 23 files
 ```
+
+Screenshot
+----------
+
 
 Grading (by Udacity)
 --------------------
