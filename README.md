@@ -96,7 +96,7 @@ Grading (by Udacity)
 
 Criteria                  |Highest Grade Possible  |Grade Recieved
 --------------------------|------------------------|--------------
-Smart Contract            |Meets Specifications    |
-Test Smart Contract       |Meets Specifications    |
-Deploy Smart Contract     |Meets Specifications    |
-Modify Client Code        |Meets Specifications    |
+Smart Contract            |Meets Specifications    |Meets Specifications
+Test Smart Contract       |Meets Specifications    |Meets Specifications
+Deploy Smart Contract     |Meets Specifications    |Meets Specifications
+Modify Client Code        |Meets Specifications    |Meets Specifications
