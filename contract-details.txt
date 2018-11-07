@@ -1,4 +1,5 @@
-Transaction Hash for New Star: 0x8ca733b19b4ecaac208f02cd02d2372820275dc593089e36c01e51210324b289
 Star Token ID: 1
+Transaction Hash for createStar: 0x8ca733b19b4ecaac208f02cd02d2372820275dc593089e36c01e51210324b289
+Transaction Hash for putStarUpForSale: 0x8551f9e5c526890a9dca1df32b92d9a642f2091d32fa56b54cc6d366e68541d6
 Contract Hash: 0x6043fe89f8dd90d60e651ba3e2e2bd847798c0e018ea139c7967ab343c077b2d
 Contract Address: 0x26c6ea538b9627ef68bc98e1a06b2c6923884779
