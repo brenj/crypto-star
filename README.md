@@ -1,5 +1,5 @@
-Decentralized Star Notary
-=========================
+Crypto Star
+===========
 
 About
 -----
